@@ -10,7 +10,9 @@ class Probe:
         self.receiver = receiver
     def __repr__(self):
         return f"Probe(origin={self.origin.pid}, sender={self.sender.pid}, receiver={self.receiver.pid})"
-    
+    ##def drawEgde(self):
+       ## self.sender.pid to self.receiver.pid
+       ## label should be (self.origin.pid,self.sender.pid,self.receiver.pid)
 class Process:
     def __init__(self,pid,sid,process_count,isBlocked=False,isWaitingOn=None):
         self.pid=pid
@@ -75,7 +77,7 @@ class Process:
 
     def sendProbe(self,initiator,sender,receiver):
     
-        if sender.checkWaitingOn(receiver):
+        if sender.checkWaitingOn(receiver) and sender.checkDifferentSites(receiver) and initiator.isLocallyDependentOn(sender):
             probe=Probe(initiator,sender,receiver)
             print("Sent probe : ",probe)
             sender.probeSendQueue.append(probe)
