@@ -1,0 +1,10 @@
+The process on sending a probe calls the method on the receiver - add_event_listener
+The process also adds the probe into the global probe queue
+The add_event_listener - adds the event name:handler pair into the listener map maintained by each process
+
+The probe is dispatched by the dispatcher unit running on a separate thread which on encountering a probe triggers the method trigger_event() on the receiver
+Here it will pass the event_name and the parameters needed for the event
+
+Now this trigger_event method checks if the event is in the registered set of event for the receiving probe (This ensures consistency due to the fact that only if the probe is sent the event would be registered on the receiver process)
+
+if the event (receiveProbe) is present - then trigger_event would call the function self.receiveProbe(args) where args will contain the probe

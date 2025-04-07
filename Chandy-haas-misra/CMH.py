@@ -24,12 +24,14 @@ class Process:
         ##List of process on which the current process is waiting on
 
         self.isWaitingOn=isWaitingOn if isWaitingOn is not None else []
-        
+        ##Each process maintains its own list of probes sent,received and their counts
         self.probeReceveQueue=[]
         self.probeSendQueue=[]
         self.probeReceiveCount=0
         self.probeSentCount=0
+        ##This is the list of event listeners and when a probe is received the event is added ti the event_listener
         self.listeners={}
+
     def add_event_listener(self,event_name,handler):
         self.listeners[event_name] = handler
     def remove_event_listener(self,event_name):
@@ -39,6 +41,7 @@ class Process:
     def trigger_event(self,event_name,*args,**kwargs):
         if event_name in self.listeners:
             handler = self.listeners[event_name]
+            print("Arguments : ",args,kwargs)
             handler(*args, **kwargs)
     
 
